@@ -40,3 +40,7 @@ class CheckOutForm(forms.ModelForm):
 
         if check_out_time and check_in_time and check_out_time <= check_in_time:
             raise forms.ValidationError("The exit time must be later than the entry time.")
+
+class ReportFilterForm(forms.Form):
+    start_date = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+    end_date = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))

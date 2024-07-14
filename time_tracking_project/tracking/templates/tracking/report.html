@@ -1,0 +1,43 @@
+<!-- templates/tracking/report.html -->
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report about Hours</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>Report about Hours</h1>
+    <form method="get" action="{% url 'report' %}">
+        {{ form.as_p }}
+        <button type="submit">Filter</button>
+    </form>
+    <a href="{% url 'export_report_csv' %}">Export to CSV</a>
+    <a href="{% url 'export_report_pdf' %}">Export to PDF</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Check IN</th>
+                <th>Check OUT</th>
+                <th>Total hours</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.check_in_time }}</td>
+                <td>{{ record.check_out_time }}</td>
+                <td>{{ record.total_hours }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No records</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
