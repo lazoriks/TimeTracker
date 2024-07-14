@@ -5,6 +5,7 @@ from .forms import LoginForm, CheckInForm, CheckOutForm, UserManagementForm, Rep
 from .models import CheckInCheckOut
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.contrib.auth.models import User  # Import User model here
 
 def login_view(request):
     if request.method == 'POST':

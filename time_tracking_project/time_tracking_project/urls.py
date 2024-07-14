@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from tracking import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +27,4 @@ urlpatterns = [
     path('check_out/', views.CheckOutView.as_view(), name='check_out'),
     path('user_management/', views.UserManagementView.as_view(), name='user_management'),
     path('report/', views.ReportView.as_view(), name='report'),
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
