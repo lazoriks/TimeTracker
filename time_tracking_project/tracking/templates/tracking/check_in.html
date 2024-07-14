@@ -1,20 +1,19 @@
-<!-- templates/tracking/check_in.html -->
-
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Check In Work</title>
-    {% load static %}
+    <title>Check In</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <h1>Check In Work</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Mark the Check IN</button>
-    </form>
+    <div class="login-container">
+        <h1>Check In</h1>
+        <form method="POST" action="{% url 'check_in' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Check In</button>
+        </form>
+    </div>
 </body>
 </html>

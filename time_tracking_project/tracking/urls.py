@@ -1,12 +1,10 @@
-# tracking/urls.py
-
 from django.urls import path
-from . import views
+from .views import LoginView, check_in_view, check_out_view, UserManagementView, report_view
 
 urlpatterns = [
-    path('check-in/', views.check_in, name='check_in'),
-    path('check-out/', views.check_out, name='check_out'),
-    path('report/', views.report, name='report'),
-    path('export/csv/', views.export_report_csv, name='export_report_csv'),
-    path('export/pdf/', views.export_report_pdf, name='export_report_pdf'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('check_in/', check_in_view, name='check_in'),
+    path('check_out/', check_out_view, name='check_out'),
+    path('user_management/', UserManagementView.as_view(), name='user_management'),
+    path('report/', report_view, name='report'),
 ]

@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report</title>
+    <title>Home</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <div class="login-container">
-        <h1>Report</h1>
-        <form method="POST" action="{% url 'report' %}">
+        <h1>Welcome to Time Tracking</h1>
+        <form method="POST" action="{% url 'login' %}">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Generate Report</button>
+            <button type="submit">Login</button>
         </form>
     </div>
 </body>

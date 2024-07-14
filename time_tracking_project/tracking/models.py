@@ -3,6 +3,7 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -41,27 +42,18 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def str(self):
         return self.email
 
+User = get_user_model()
+
 class CheckInCheckOut(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    check_in_time = models.DateTimeField(default=timezone.now)
-    check_out_time = models.DateTimeField(null=True, blank=True)
-    total_hours = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-
-    class Meta:
-        verbose_name = 'Check-In/Check-Out Record'
-        verbose_name_plural = 'Check-In/Check-Out Records'
-        ordering = ['-check_in_time']
-
-    def str(self):
-        return f"{self.user.email} - {self.check_in_time.strftime('%Y-%m-%d %H:%M:%S')}"
-
-    def clean(self):
-        if self.check_out_time and self.check_in_time and self.check_out_time <= self.check_in_time:
-            raise ValidationError('Check-out time must be after check-in time.')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    check_in_time = models.DateTimeField()
+    check_out_time = models.DateTimeField(blank=True, null=True)
+    total_hours = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        self.clean()
-        if self.check_out_time and self.check_in_time:
-            delta = self.check_out_time - self.check_in_time
-            self.total_hours = delta.total_seconds() / 3600
+        if self.check_in_time and self.check_out_time:
+            self.total_hours = (self.check_out_time - self.check_in_time).total_seconds() / 3600
         super().save(*args, **kwargs)
+
+    def str(self):
+        return f"{self.user} - {self.check_in_time} to {self.check_out_time}"
