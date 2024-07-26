@@ -10,6 +10,40 @@ Time Tracking work hours - Check IN/ Check OUT
 The application is designed to enter working hours. Using the Django framework, we developed models for entering working hours. The main login page. If the user is a superuser, a form for editing users and passwords opens. The Generate report button is also available.
 If the user is another and is already in the database, a form opens to enter the login hour or exit hour.
 
+Django project with Postgresql database, development in VS Code in Python, deployment to Heroku
+
+there will be 2 tables in the database:
+1 - Users
+columns - User (String, length 150 characters), Password (String, length 50 characters), SuperUser (boolean), Email (String, 150), Mobile (String, 15)
+2 - Hours
+columns - User (String, length 150 characters), ComeIn(DateTime), ComeOut(DateTime), Hour(Number, 10, 2)
+
+The main page is 
+field 1 - User
+field 2 - Password
+button - LogIn
+
+the button makes a request to the database and checks whether the user is a superuser or not
+
+1) if it is a superuser, a page with a table of users opens
+The table has the following fields:
+User(Full name)(required field + validation), Password(required field + validation), SuperUser(True or False), Email(field can be empty), Mobile(field can be empty)
+and buttons - Add, Edit, Delete
+
+also add the button - Report to the page
+which opens the Report page, where there is a field 1 - Start period (selection by the field - ComeIn), field 2 - End Period selection by the field - ComeIn), field 3 - User (can be empty, then the report will be generated for all users), and the button - Create report. The report is generated on the same page and add 2 buttons - Upload to CSV and Upload to PDF
+
+2) if it is not a superuser
+then the page opens where it is:
+- Last time field - a query is made to the database and the last record for this user is searched. 
+The last record is searched by the ComeIn and ComeOut fields. If it is found that the last record is in the ComeIN field, the inscription to the right of the field is displayed - "Last Come in", and if it is found that the last record is in the ComeOut field, the inscription to the right of the field is displayed - "Last Come Out"
+- Date field - is filled automatically with the current date and time
+- button - Register
+
+when the button is pressed, the record is written to the database.
+a) if the last record for this User was in the ComeIn field, then this record is edited and the value of the Date field is written to the ComeOut field and the difference between the ComeOut and ComeIn fields is calculated, and this difference is written to the Hour field
+,) if the last record for this User was in the ComeOut field, then a new record is created and the value of the Date field is written to the ComeIn field, and the ComeOut and Hour fields are left blank.
+
 ![amiresponsive](https://raw.githubusercontent.com/lazoriks/time_tracking_project/static/images/mush.jpg)
 
 ## Link to Live Site
