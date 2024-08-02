@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-7%k5(z1gx17z%de55(63cci6wr16d3o$l%4!a&y@advwk&1al!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', 'https://time-tracking-project-py-e169061c7261.herokuapp.com/']
 
