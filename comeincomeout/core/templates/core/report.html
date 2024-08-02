@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .report-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .report-actions a {
+            padding: 10px 15px;
+            border: none;
+            color: white;
+            background-color: #007bff;
+            border-radius: 4px;
+            text-decoration: none;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .report-actions a:hover {
+            background-color: #0056b3;
+        }
+        .report-actions a.pdf {
+            background-color: #28a745;
+        }
+        .report-actions a.pdf:hover {
+            background-color: #218838;
+        }
+        .report-actions a.csv {
+            background-color: #dc3545;
+        }
+        .report-actions a.csv:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generate Report</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="start_period">Start Period:</label>
+                {{ form.start_period }}
+            </div>
+            <div class="form-group">
+                <label for="end_period">End Period:</label>
+                {{ form.end_period }}
+            </div>
+            <div class="form-group">
+                <label for="user">User:</label>
+                {{ form.user }}
+            </div>
+            <button type="submit">Create Report</button>
+        </form>
+        {% if report %}
+        <div class="report-actions">
+            <a href="{% url 'upload_to_csv' %}" class="csv">Upload to CSV</a>
+            <a href="{% url 'upload_to_pdf' %}" class="pdf">Upload to PDF</a>
+        </div>
+        <div>
+            <!-- Display the generated report -->
+            {{ report }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
