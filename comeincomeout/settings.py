@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-oxh6ucb&nq0lhys7%0t2-#e_80#3x-63uf)znnshqm^1y7@for'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'comeincomeout.urls'
@@ -77,13 +78,19 @@ WSGI_APPLICATION = 'comeincomeout.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 # Database configuration
-DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://udd6ddr36zt:tUt3bsyl3qgw@ep-gentle-mountain-a23bxz6h-pooler.eu-central-1.aws.neon.tech:5432/lily_slaw_crepe_708680',
-        conn_max_age=600,
-        ssl_require=True
-    )
-}
+if "DATABASE_URL" in os.environ:
+    print("database = PostgreSQL via Heroku")
+    DATABASES = {
+        "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    }
+else:
+    print("database = db.sqlite3")
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 # Password validation
