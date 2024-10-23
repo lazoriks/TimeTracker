@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="date"],
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generate Report</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="start_period">Start Period:</label>
+        <input type="date" id="start_period" name="start_period">
+        <label for="end_period">End Period:</label>
+        <input type="date" id="end_period" name="end_period">
+        <label for="user">User:</label>
+        <input type="text" id="user" name="user">
+        <button type="submit" name="csv">Upload to CSV</button>
+        <button type="submit" name="pdf">Upload to PDF</button>
+    </form>
+    {% if hours %}
+        <h2>Report Data</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Come In</th>
+                    <th>Come Out</th>
+                    <th>Hours</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hour in hours %}
+                <tr>
+                    <td>{{ hour.user.user }}</td>
+                    <td>{{ hour.come_in }}</td>
+                    <td>{{ hour.come_out }}</td>
+                    <td>{{ hour.hour }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>

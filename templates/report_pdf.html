@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Report</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Come In</th>
+                <th>Come Out</th>
+                <th>Hours</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hour in hours %}
+            <tr>
+                <td>{{ hour.user.user }}</td>
+                <td>{{ hour.come_in }}</td>
+                <td>{{ hour.come_out }}</td>
+                <td>{{ hour.hour }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
