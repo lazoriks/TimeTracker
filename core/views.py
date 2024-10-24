@@ -26,7 +26,10 @@ def login_view(request):
 def user_list_view(request):
     if not request.user.is_superuser:
         return redirect('login')
-    users = User.objects.all()
+     try:
+        users = User.objects.all()
+    except Exception as e:
+        return HttpResponse(f"Error retrieving users: {e}", status=500)
     return render(request, 'user_list.html', {'users': users})
 
 
