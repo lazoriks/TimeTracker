@@ -58,6 +58,7 @@
             </tr>
         </thead>
         <tbody>
+            {% if users %}
             {% for user in users %}
             <tr>
                 <td>{{ user.user }}</td>
@@ -68,6 +69,11 @@
                 <td>{{ user.super_user }}</td>
             </tr>
             {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="6">No users found.</td>
+            </tr>
+            {% endif %}
         </tbody>
     </table>
 </body>
